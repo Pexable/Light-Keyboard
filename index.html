@@ -7,18 +7,16 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <title>লাইট টাইপরাইটার কীবোর্ড</title>
-<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Noto+Sans+Bengali:wght@400;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Noto+Sans+Bengali:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#120c08; --paper:#857c74; --ink-dim:#71685f; --ink-lit:#1f1712;
+  --bg:#120c08; --paper:#4a423c; --ink-dim:#7a6f64; --ink-lit:#fff3d6;
   --key:#6d635d; --key-top:#8a7f78; --key-text:#f1e9e0; --rail:#1a1613; --glow:255,226,160;
   --font:'Special Elite','Noto Sans Bengali','Kalpurush','Nirmala UI',monospace;
   --ui:system-ui,'Noto Sans Bengali','Kalpurush','Nirmala UI',sans-serif;
   color-scheme:dark;
 }
-:root{--gi:1}
-:root[data-glow="cool"]{--glow:190,225,255}
-:root[data-glow="rose"]{--glow:255,185,200}
+:root[data-glow="cool"]{--glow:190,225,255;--ink-lit:#e8f4ff}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;margin:0;overscroll-behavior:none;overflow:hidden}
 body{height:100dvh;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
@@ -31,39 +29,28 @@ body.ime .bar{display:none}
 .bar button{flex:none}.bar .count{flex:none;margin-left:auto;font-family:var(--font);opacity:.8}
 .bar button{background:#2a221d;color:var(--key-text);border:1px solid #4b3f37;border-radius:999px;padding:6px 12px;font:13px var(--ui);cursor:pointer}
 .bar button:focus-visible,.key:focus-visible{outline:2px solid rgb(var(--glow));outline-offset:2px}
-.paperwrap{position:relative;flex:1 1 55%;min-height:56px;border-radius:26px 26px 0 0;background:linear-gradient(#948b83,#7a716a);overflow:hidden}
-.beam{position:absolute;left:var(--x,50%);bottom:0;width:min(460px,150%);height:125%;transform:translateX(-50%);pointer-events:none;
-  background:radial-gradient(ellipse 50% 100% at 50% 100%,rgba(var(--glow),calc(.95*var(--gi))),rgba(var(--glow),calc(.35*var(--gi))) 45%,rgba(var(--glow),0) 78%);
-  clip-path:polygon(47% 100%,53% 100%,100% 0,0 0);filter:blur(7px);mix-blend-mode:screen}
-.pool{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 150px 64px at var(--x,50%) 100%,rgba(var(--glow),calc(.95*var(--gi))),transparent);mix-blend-mode:screen}
+.paperwrap{position:relative;flex:1 1 55%;min-height:56px;border-radius:26px 26px 0 0;background:var(--paper);overflow:hidden;
+  background-image:radial-gradient(ellipse 260px 220px at var(--x,50%) 100%,rgba(var(--glow),.55),rgba(var(--glow),0) 70%)}
 body.ime .paperwrap{border-radius:18px 18px 0 0}
-body.ime .layer .txt{font-size:20px}
 .layer{position:absolute;inset:0;overflow:hidden}
 .layer .txt{position:absolute;left:22px;right:22px;top:0;font:21px/30px var(--font);white-space:pre-wrap;word-break:break-word}
 .dim{color:var(--ink-dim)}
-.lit{color:var(--ink-lit);
-  -webkit-mask-image:conic-gradient(from -40deg at var(--x,50%) calc(100% - 4px),transparent 0deg,#000 16deg,#000 64deg,transparent 80deg),radial-gradient(circle 270px at var(--x,50%) 100%,#000 45%,transparent 100%);
-  mask-image:conic-gradient(from -40deg at var(--x,50%) calc(100% - 4px),transparent 0deg,#000 16deg,#000 64deg,transparent 80deg),radial-gradient(circle 270px at var(--x,50%) 100%,#000 45%,transparent 100%);
-  -webkit-mask-composite:source-in;mask-composite:intersect}
+.lit{color:var(--ink-lit);text-shadow:0 0 8px rgba(var(--glow),.6);
+  -webkit-mask-image:radial-gradient(ellipse 190px 170px at var(--x,50%) calc(100% - 6px),#000 25%,transparent 100%);
+  mask-image:radial-gradient(ellipse 190px 170px at var(--x,50%) calc(100% - 6px),#000 25%,transparent 100%)}
 .caret{display:inline-block;width:2px;height:1.1em;vertical-align:text-bottom;background:currentColor;animation:blink 1s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
 .rail{position:relative;height:22px;background:var(--rail);flex:none;border-top:1px solid #000}
 .rail::before{content:"";position:absolute;left:0;right:0;top:8px;height:6px;background:linear-gradient(#050403,#2b241f);border-radius:3px}
 .lamp{position:absolute;top:2px;height:18px;width:54px;margin-left:-27px;border-radius:999px;background:#d9d2cb;box-shadow:0 0 14px 4px rgba(var(--glow),.8),0 2px 4px #000;display:flex;align-items:center;justify-content:center;gap:4px}
-.lamp.pulse{box-shadow:0 0 26px 10px rgba(var(--glow),1),0 2px 4px #000}
 .lamp i{width:5px;height:5px;border-radius:50%;background:#e8a33a}
 .lamp i:nth-child(2){background:#7bd88f}
-.strip{flex:none;display:flex;align-items:center;gap:4px;background:#2e2723;padding:3px 6px;height:36px}
-.strip button{border:0;background:transparent;color:var(--key-text);font:500 16px var(--ui);cursor:pointer;border-radius:8px;height:30px;padding:0 4px}
-.strip .sug{flex:1 1 0;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border-right:1px solid #4b3f37;border-radius:0}
-.strip .tb{flex:none;width:32px;font-size:15px}
-.strip .tb.off{opacity:.35}
 .kb{flex:0 0 auto;background:#3a332e;border-radius:0 0 26px 26px;padding:10px 6px 10px;display:flex;flex-direction:column;gap:7px;user-select:none;touch-action:manipulation}
 body.ime .kb{border-radius:0;padding:8px 4px 6px;gap:6px}
 .row{display:flex;gap:6px;justify-content:center}
 .row.vow{overflow-x:auto;justify-content:flex-start;scrollbar-width:none}
 .row.vow .key{flex:0 0 44px;height:38px;font-size:19px}
-.key{box-shadow:0 3px 0 #2a2420,inset 0 1px 0 rgba(255,255,255,.18);flex:1 1 0;min-width:0;height:48px;border:0;border-radius:11px;background:linear-gradient(var(--key-top),var(--key));color:var(--key-text);font:500 19px var(--ui);box-shadow:0 3px 0 #2a2420;cursor:pointer;padding:0;transition:transform .05s}
+.key{flex:1 1 0;min-width:0;height:48px;border:0;border-radius:11px;background:linear-gradient(var(--key-top),var(--key));color:var(--key-text);font:500 19px var(--ui);box-shadow:0 3px 0 #2a2420;cursor:pointer;padding:0;transition:transform .05s}
 .key.wide{flex:1.5}.key.space{flex:4}.key.fn{background:linear-gradient(#5c534d,#4b433e);font-size:15px}
 .key.on{background:linear-gradient(rgb(var(--glow)),#c9a560);color:#2a1f10}
 .key.down,.key:active{transform:translateY(3px);box-shadow:none;filter:brightness(1.25)}
@@ -88,15 +75,12 @@ body.ime .key{height:40px}
   </div>
   <div class="paperwrap" id="paper">
     <div class="layer dim"><div class="txt" id="t1"></div></div>
-    <div class="beam"></div><div class="pool"></div>
     <div class="layer lit" aria-hidden="true"><div class="txt" id="t2"></div></div>
   </div>
   <div class="rail"><div class="lamp" id="lamp"><i></i><i></i></div></div>
-  <div class="strip"><button class="sug"></button><button class="sug"></button><button class="sug"></button><button class="tb" id="tSound" aria-label="শব্দ">🔔</button><button class="tb" id="tGlow" aria-label="আলোর রং">💡</button><button class="tb" id="tBri" aria-label="উজ্জ্বলতা">☀</button></div>
   <div class="kb" id="kb"></div>
 </div>
 <script>
-window.onerror=(m,u,l)=>{const d=document.createElement("div");d.style.cssText="position:fixed;left:0;right:0;top:0;background:#600;color:#fff;font:13px sans-serif;padding:6px;z-index:9";d.textContent="JS error: "+m+" (line "+l+")";document.body.appendChild(d)};
 const MAX=3000, LH=30, IME=!!window.Android;
 if(IME)document.body.classList.add("ime");
 const ROWS=[["q","w","e","r","t","y","u","i","o","p"],["a","s","d","f","g","h","j","k","l"],["z","x","c","v","b","n","m"]];
@@ -105,42 +89,16 @@ const SYM=[["1","2","3","4","5","6","7","8","9","0"],["-","/",":",";","(",")","$
 const BN={q:"ঙ",w:"য",e:"ড",r:"প",t:"ট",y:"চ",u:"জ",i:"হ",o:"গ",p:"ড়",a:"ৃ",s:"ু",d:"ি",f:"া",g:"্",h:"ব",j:"ক",k:"ত",l:"দ",z:"্র",x:"ও",c:"ে",v:"র",b:"ন",n:"স",m:"ম"};
 const BS={q:"ং",w:"য়",e:"ঢ",r:"ফ",t:"ঠ",y:"ছ",u:"ঝ",i:"ঞ",o:"ঘ",p:"ঢ়",a:"র্",s:"ূ",d:"ী",f:"অ",g:"।",h:"ভ",j:"খ",k:"থ",l:"ধ",z:"ঁ",x:"ৗ",c:"ৈ",v:"ল",b:"ণ",n:"ষ",m:"শ"};
 const VOW=["অ","আ","ই","ঈ","উ","ঊ","ঋ","এ","ঐ","ও","ঔ","ৎ","ঃ","ং","ঁ","ক্ষ","জ্ঞ","৳"];
-const EN="the be to of and a in that have I it for not on with he as you do at this but his by from they we say her she or an will my one all would there their what so up out if about who get which go me when make can like time no just him know take people into year your good some could them see other than then now look only come its over think also back after use two how our work first well way even new want because any these give day most us is are was were been has had did said very hello thanks please yes okay love home friend today tomorrow morning night where here sorry welcome message call send number little".split(" ");
-const BNW="আমি তুমি আপনি ধন্যবাদ কেমন আছো আছি ভালো বাংলা হ্যাঁ না কি এই সে আজ কাল আর এবং কোথায় কখন কেন কী করছো খাবে যাবো আসবো বাড়ি স্কুল কাজ সময় ঠিক শুভ সকাল রাত্রি সালাম".split(" ");
-const save=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}}, load=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
-let learned={};try{learned=JSON.parse(load("lk_words")||"{}")}catch(e){}
-let sound=load("lk_sound")!=="0", gi=parseFloat(load("lk_gi"))||1, gli=parseInt(load("lk_gl"))||0, pt;
-const GL=["warm","cool","rose"], FR=/[A-Za-z\u0980-\u09FF]+$/;
-function applyFx(){const r=document.documentElement;r.dataset.glow=GL[gli];r.style.setProperty("--gi",gi);$("tSound").classList.toggle("off",!sound)}
-function learn(w){if(w.length<2)return;if(/^[A-Za-z]+$/.test(w))w=w.toLowerCase();learned[w]=(learned[w]||0)+1;save("lk_words",JSON.stringify(learned))}
-function curFrag(){const m=text.match(FR);return m?m[0]:""}
-function suggest(){
-  const f=curFrag(),fl=f.toLowerCase(),cap=/^[A-Z]/.test(f);
-  const lw=Object.keys(learned).sort((a,b)=>learned[b]-learned[a]);
-  const pool=lw.concat(bn?BNW:EN,bn?EN:BNW),list=[];
-  for(const w of pool){if(list.length>=3)break;
-    if(!list.includes(w)&&(!f||(w.toLowerCase().startsWith(fl)&&w.toLowerCase()!==fl)))list.push(w)}
-  document.querySelectorAll(".sug").forEach((b,i)=>{const w=list[i]||"";b.textContent=cap&&w?w[0].toUpperCase()+w.slice(1):w;b.style.visibility=w?"visible":"hidden"});
-}
-function pick(w){
-  if(!w)return; tick();
-  const f=curFrag();
-  if(IME){for(let i=0;i<f.length;i++)Android.backspace();Android.commit(w+" ")}
-  text=text.slice(0,text.length-f.length)+w+" ";
-  if(IME)text=text.slice(-150);
-  learn(w); render();
-}
 let text="", shift=false, caps=false, sym=false, bn=false, lastShift=0, audio;
 const $=id=>document.getElementById(id);
 const kb=$("kb"), paper=$("paper"), lamp=$("lamp"), t1=$("t1"), t2=$("t2");
 
 function tick(){
-  const L=lamp.classList;L.add("pulse");clearTimeout(pt);pt=setTimeout(()=>L.remove("pulse"),110);
-  if(sound)try{audio=audio||new (window.AudioContext||window.webkitAudioContext)();
+  try{audio=audio||new (window.AudioContext||window.webkitAudioContext)();
     const o=audio.createOscillator(),g=audio.createGain();o.type="square";o.frequency.value=180+Math.random()*40;
     g.gain.setValueAtTime(.04,audio.currentTime);g.gain.exponentialRampToValueAtTime(.001,audio.currentTime+.05);
     o.connect(g).connect(audio.destination);o.start();o.stop(audio.currentTime+.05);}catch(e){}
-  if(sound)try{navigator.vibrate&&navigator.vibrate(8)}catch(e){}
+  try{navigator.vibrate&&navigator.vibrate(8)}catch(e){}
 }
 const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
 let curX=null,tgtX=0;
@@ -153,8 +111,8 @@ function render(){
   tgtX=22+c.offsetLeft+1;
   if(curX===null)curX=tgtX;
   if(!IME){try{localStorage.setItem("lk_text",text)}catch(e){}}
-  suggest();
   $("count").textContent=text.length.toLocaleString("en-US")+" / "+MAX.toLocaleString("en-US");
+  drawKeys();
 }
 function frame(){
   curX+=(tgtX-curX)*.22;
@@ -162,28 +120,21 @@ function frame(){
   paper.style.setProperty("--x",x); lamp.style.left=x;
   requestAnimationFrame(frame);
 }
-let first=true;
 function add(s){
-  if(IME&&first){text="";first=false}
   if(!IME&&text.length+s.length>MAX)return;
   if(IME)Android.commit(s);
   text+=s; if(IME)text=text.slice(-150);
-  if(s===" "||s==="\n"){const m=text.slice(0,-1).match(FR);if(m)learn(m[0])}
 }
-let dirty=false,repT,repI;
-function stopRep(){clearTimeout(repT);clearInterval(repI)}
-["pointerup","pointercancel","touchend","touchcancel","blur"].forEach(n=>window.addEventListener(n,stopRep,true));
 function press(k){
   tick();
   if(k==="@bksp"){if(IME)Android.backspace();text=text.slice(0,-1)}
   else if(k==="@enter"){if(IME)Android.enter();add("\n")}
   else if(k==="@space")add(" ");
-  else if(k==="@shift"){const n=Date.now();if(n-lastShift<350){caps=true;shift=true}else{caps=false;shift=!shift}lastShift=n;dirty=true}
-  else if(k==="@sym"){sym=!sym;dirty=true}
-  else if(k==="@lang"){bn=!bn;sym=false;dirty=true}
-  else{add(k);if(shift&&!caps){shift=false;dirty=true}}
+  else if(k==="@shift"){const n=Date.now();if(n-lastShift<350){caps=true;shift=true}else{caps=false;shift=!shift}lastShift=n}
+  else if(k==="@sym")sym=!sym;
+  else if(k==="@lang"){bn=!bn;sym=false}
+  else{add(k);if(shift&&!caps)shift=false}
   render();
-  if(dirty){dirty=false;drawKeys()}
 }
 function out(ch){
   const up=shift||caps;
@@ -214,7 +165,8 @@ function drawKeys(){
 function mk(label,k,cls){
   const e=document.createElement("button");e.className="key "+cls;e.textContent=label;e.dataset.k=k;e.type="button";
   e.addEventListener("pointerdown",ev=>{ev.preventDefault();press(k);
-    if(k==="@bksp"){stopRep();repT=setTimeout(()=>{repI=setInterval(()=>press("@bksp"),60)},400)}});
+    if(k==="@bksp"){clearTimeout(e._t);clearInterval(e._i);e._t=setTimeout(()=>e._i=setInterval(()=>press("@bksp"),60),380)}});
+  ["pointerup","pointerleave","pointercancel"].forEach(n=>e.addEventListener(n,()=>{clearTimeout(e._t);clearInterval(e._i)}));
   return e;
 }
 function flash(k){[...kb.querySelectorAll(".key")].some(el=>{if(el.dataset.k===k){el.classList.add("down");setTimeout(()=>el.classList.remove("down"),90);return true}})}
@@ -229,12 +181,6 @@ document.addEventListener("keydown",e=>{
   }
   if(k){e.preventDefault();const s=shift;press(k);flash(k)}
 });
-document.querySelectorAll(".sug").forEach(b=>b.addEventListener("pointerdown",e=>{e.preventDefault();pick(b.textContent)}));
-const tap=(id,fn)=>$(id).addEventListener("pointerdown",e=>{e.preventDefault();fn();applyFx()});
-tap("tSound",()=>{sound=!sound;save("lk_sound",sound?"1":"0")});
-tap("tGlow",()=>{gli=(gli+1)%GL.length;save("lk_gl",gli)});
-tap("tBri",()=>{gi=gi>=1.4?0.6:gi+0.4;gi=Math.round(gi*10)/10;save("lk_gi",gi)});
-applyFx();
 $("copy").onclick=async()=>{try{await navigator.clipboard.writeText(text);$("copy").textContent="কপি হয়েছে"}catch(e){$("copy").textContent="কপি হয়নি"}setTimeout(()=>$("copy").textContent="কপি",1500)};
 $("share").onclick=async()=>{try{if(navigator.share)await navigator.share({text});else await navigator.clipboard.writeText(text)}catch(e){}};
 document.querySelectorAll("[data-send]").forEach(b=>b.onclick=()=>{
@@ -244,12 +190,11 @@ document.querySelectorAll("[data-send]").forEach(b=>b.onclick=()=>{
 });
 $("save").onclick=()=>{const a=document.createElement("a");a.href="data:text/plain;charset=utf-8,"+encodeURIComponent(text);a.download="note.txt";a.click()};
 $("clear").onclick=()=>{text="";render()};
-$("glow").onclick=()=>{gli=(gli+1)%GL.length;save("lk_gl",gli);applyFx()};
+$("glow").onclick=()=>{const r=document.documentElement;r.dataset.glow=r.dataset.glow==="cool"?"warm":"cool"};
 window.addEventListener("resize",render);
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(render);
-if(IME)text="Light Keyboard চালু ✓ ";
 if(!IME){try{text=localStorage.getItem("lk_text")||""}catch(e){}if(!text)text="আমার সোনার বাংলা, আমি তোমায় ভালোবাসি। "}
-render();drawKeys();requestAnimationFrame(frame);
+render();requestAnimationFrame(frame);
 </script>
 </body>
 </html>
