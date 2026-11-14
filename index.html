@@ -113,7 +113,6 @@ function render(){
   if(curX===null)curX=tgtX;
   if(!IME){try{localStorage.setItem("lk_text",text)}catch(e){}}
   $("count").textContent=text.length.toLocaleString("en-US")+" / "+MAX.toLocaleString("en-US");
-  drawKeys();
 }
 function frame(){
   curX+=(tgtX-curX)*.22;
@@ -128,16 +127,20 @@ function add(s){
   if(IME)Android.commit(s);
   text+=s; if(IME)text=text.slice(-150);
 }
+let dirty=false,repT,repI;
+function stopRep(){clearTimeout(repT);clearInterval(repI)}
+["pointerup","pointercancel","touchend","touchcancel","blur"].forEach(n=>window.addEventListener(n,stopRep,true));
 function press(k){
   tick();
   if(k==="@bksp"){if(IME)Android.backspace();text=text.slice(0,-1)}
   else if(k==="@enter"){if(IME)Android.enter();add("\n")}
   else if(k==="@space")add(" ");
-  else if(k==="@shift"){const n=Date.now();if(n-lastShift<350){caps=true;shift=true}else{caps=false;shift=!shift}lastShift=n}
-  else if(k==="@sym")sym=!sym;
-  else if(k==="@lang"){bn=!bn;sym=false}
-  else{add(k);if(shift&&!caps)shift=false}
+  else if(k==="@shift"){const n=Date.now();if(n-lastShift<350){caps=true;shift=true}else{caps=false;shift=!shift}lastShift=n;dirty=true}
+  else if(k==="@sym"){sym=!sym;dirty=true}
+  else if(k==="@lang"){bn=!bn;sym=false;dirty=true}
+  else{add(k);if(shift&&!caps){shift=false;dirty=true}}
   render();
+  if(dirty){dirty=false;drawKeys()}
 }
 function out(ch){
   const up=shift||caps;
@@ -168,8 +171,7 @@ function drawKeys(){
 function mk(label,k,cls){
   const e=document.createElement("button");e.className="key "+cls;e.textContent=label;e.dataset.k=k;e.type="button";
   e.addEventListener("pointerdown",ev=>{ev.preventDefault();press(k);
-    if(k==="@bksp"){clearTimeout(e._t);clearInterval(e._i);e._t=setTimeout(()=>e._i=setInterval(()=>press("@bksp"),60),380)}});
-  ["pointerup","pointerleave","pointercancel"].forEach(n=>e.addEventListener(n,()=>{clearTimeout(e._t);clearInterval(e._i)}));
+    if(k==="@bksp"){stopRep();repT=setTimeout(()=>{repI=setInterval(()=>press("@bksp"),60)},400)}});
   return e;
 }
 function flash(k){[...kb.querySelectorAll(".key")].some(el=>{if(el.dataset.k===k){el.classList.add("down");setTimeout(()=>el.classList.remove("down"),90);return true}})}
@@ -198,7 +200,7 @@ window.addEventListener("resize",render);
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(render);
 if(IME)text="Light Keyboard চালু ✓ ";
 if(!IME){try{text=localStorage.getItem("lk_text")||""}catch(e){}if(!text)text="আমার সোনার বাংলা, আমি তোমায় ভালোবাসি। "}
-render();requestAnimationFrame(frame);
+render();drawKeys();requestAnimationFrame(frame);
 </script>
 </body>
 </html>
