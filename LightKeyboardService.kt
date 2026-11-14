@@ -23,7 +23,7 @@ class LightKeyboardService : InputMethodService() {
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreateInputView(): View {
-        val h = (resources.displayMetrics.density * 340).toInt()
+        val h = (resources.displayMetrics.density * 380).toInt()
         val web = WebView(this)
         web.settings.javaScriptEnabled = true
         web.settings.domStorageEnabled = true
