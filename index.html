@@ -7,7 +7,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <title>লাইট টাইপরাইটার কীবোর্ড</title>
-<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Noto+Sans+Bengali:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Noto+Sans+Bengali:wght@400;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <style>
 :root{
   --bg:#120c08; --paper:#4a423c; --ink-dim:#7a6f64; --ink-lit:#fff3d6;
@@ -81,6 +81,7 @@ body.ime .key{height:40px}
   <div class="kb" id="kb"></div>
 </div>
 <script>
+window.onerror=(m,u,l)=>{const d=document.createElement("div");d.style.cssText="position:fixed;left:0;right:0;top:0;background:#600;color:#fff;font:13px sans-serif;padding:6px;z-index:9";d.textContent="JS error: "+m+" (line "+l+")";document.body.appendChild(d)};
 const MAX=3000, LH=30, IME=!!window.Android;
 if(IME)document.body.classList.add("ime");
 const ROWS=[["q","w","e","r","t","y","u","i","o","p"],["a","s","d","f","g","h","j","k","l"],["z","x","c","v","b","n","m"]];
@@ -120,7 +121,9 @@ function frame(){
   paper.style.setProperty("--x",x); lamp.style.left=x;
   requestAnimationFrame(frame);
 }
+let first=true;
 function add(s){
+  if(IME&&first){text="";first=false}
   if(!IME&&text.length+s.length>MAX)return;
   if(IME)Android.commit(s);
   text+=s; if(IME)text=text.slice(-150);
@@ -193,6 +196,7 @@ $("clear").onclick=()=>{text="";render()};
 $("glow").onclick=()=>{const r=document.documentElement;r.dataset.glow=r.dataset.glow==="cool"?"warm":"cool"};
 window.addEventListener("resize",render);
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(render);
+if(IME)text="Light Keyboard চালু ✓ ";
 if(!IME){try{text=localStorage.getItem("lk_text")||""}catch(e){}if(!text)text="আমার সোনার বাংলা, আমি তোমায় ভালোবাসি। "}
 render();requestAnimationFrame(frame);
 </script>
