@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#120c08">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>লাইট টাইপরাইটার কীবোর্ড</title>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Noto+Sans+Bengali:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#120c08; --paper:#4a423c; --ink-dim:#7a6f64; --ink-lit:#fff3d6;
+  --key:#6d635d; --key-top:#8a7f78; --key-text:#f1e9e0; --rail:#1a1613; --glow:255,226,160;
+  --font:'Special Elite','Noto Sans Bengali','Kalpurush','Nirmala UI',monospace;
+  --ui:system-ui,'Noto Sans Bengali','Kalpurush','Nirmala UI',sans-serif;
+  color-scheme:dark;
+}
+:root[data-glow="cool"]{--glow:190,225,255;--ink-lit:#e8f4ff}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;margin:0;overscroll-behavior:none;overflow:hidden}
+body{height:100dvh;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+body{background:radial-gradient(circle at 85% 8%,#5a3312 0,#120c08 45%);display:flex;justify-content:center;font-family:var(--ui);color:var(--key-text)}
+body.ime{background:#120c08}
+.device{width:100%;max-width:620px;height:100%;display:flex;flex-direction:column;padding:env(safe-area-inset-top,0) 10px calc(env(safe-area-inset-bottom,0) + 10px)}
+body.ime .device{padding:0}
+.bar{overflow-x:auto;scrollbar-width:none;display:flex;align-items:center;gap:8px;padding:10px 4px;font-size:13px}
+body.ime .bar{display:none}
+.bar button{flex:none}.bar .count{flex:none;margin-left:auto;font-family:var(--font);opacity:.8}
+.bar button{background:#2a221d;color:var(--key-text);border:1px solid #4b3f37;border-radius:999px;padding:6px 12px;font:13px var(--ui);cursor:pointer}
+.bar button:focus-visible,.key:focus-visible{outline:2px solid rgb(var(--glow));outline-offset:2px}
+.paperwrap{position:relative;flex:1 1 55%;min-height:56px;border-radius:26px 26px 0 0;background:var(--paper);overflow:hidden;
+  background-image:radial-gradient(ellipse 260px 220px at var(--x,50%) 100%,rgba(var(--glow),.55),rgba(var(--glow),0) 70%)}
+body.ime .paperwrap{border-radius:18px 18px 0 0}
+.layer{position:absolute;inset:0;overflow:hidden}
+.layer .txt{position:absolute;left:22px;right:22px;top:0;font:21px/30px var(--font);white-space:pre-wrap;word-break:break-word}
+.dim{color:var(--ink-dim)}
+.lit{color:var(--ink-lit);text-shadow:0 0 8px rgba(var(--glow),.6);
+  -webkit-mask-image:radial-gradient(ellipse 190px 170px at var(--x,50%) calc(100% - 6px),#000 25%,transparent 100%);
+  mask-image:radial-gradient(ellipse 190px 170px at var(--x,50%) calc(100% - 6px),#000 25%,transparent 100%)}
+.caret{display:inline-block;width:2px;height:1.1em;vertical-align:text-bottom;background:currentColor;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.rail{position:relative;height:22px;background:var(--rail);flex:none;border-top:1px solid #000}
+.rail::before{content:"";position:absolute;left:0;right:0;top:8px;height:6px;background:linear-gradient(#050403,#2b241f);border-radius:3px}
+.lamp{position:absolute;top:2px;height:18px;width:54px;margin-left:-27px;border-radius:999px;background:#d9d2cb;box-shadow:0 0 14px 4px rgba(var(--glow),.8),0 2px 4px #000;display:flex;align-items:center;justify-content:center;gap:4px}
+.lamp i{width:5px;height:5px;border-radius:50%;background:#e8a33a}
+.lamp i:nth-child(2){background:#7bd88f}
+.kb{flex:0 0 auto;background:#3a332e;border-radius:0 0 26px 26px;padding:10px 6px 10px;display:flex;flex-direction:column;gap:7px;user-select:none;touch-action:manipulation}
+body.ime .kb{border-radius:0;padding:8px 4px 6px;gap:6px}
+.row{display:flex;gap:6px;justify-content:center}
+.row.vow{overflow-x:auto;justify-content:flex-start;scrollbar-width:none}
+.row.vow .key{flex:0 0 44px;height:38px;font-size:19px}
+.key{flex:1 1 0;min-width:0;height:48px;border:0;border-radius:11px;background:linear-gradient(var(--key-top),var(--key));color:var(--key-text);font:500 19px var(--ui);box-shadow:0 3px 0 #2a2420;cursor:pointer;padding:0;transition:transform .05s}
+.key.wide{flex:1.5}.key.space{flex:4}.key.fn{background:linear-gradient(#5c534d,#4b433e);font-size:15px}
+.key.on{background:linear-gradient(rgb(var(--glow)),#c9a560);color:#2a1f10}
+.key.down,.key:active{transform:translateY(3px);box-shadow:none;filter:brightness(1.25)}
+body.ime .key{height:40px}
+@media (prefers-reduced-motion:reduce){.caret{animation:none}}
+@media (max-height:640px){.key{height:40px}}
+</style>
+</head>
+<body>
+<div class="device">
+  <div class="bar">
+    <button id="copy">কপি</button>
+    <button id="share">শেয়ার</button>
+    <button data-send="wa">WhatsApp</button>
+    <button data-send="tg">Telegram</button>
+    <button data-send="sms">SMS</button>
+    <button data-send="mail">Email</button>
+    <button id="save">সেভ</button>
+    <button id="glow">আলোর রং</button>
+    <button id="clear">মুছুন</button>
+    <span class="count" id="count"></span>
+  </div>
+  <div class="paperwrap" id="paper">
+    <div class="layer dim"><div class="txt" id="t1"></div></div>
+    <div class="layer lit" aria-hidden="true"><div class="txt" id="t2"></div></div>
+  </div>
+  <div class="rail"><div class="lamp" id="lamp"><i></i><i></i></div></div>
+  <div class="kb" id="kb"></div>
+</div>
+<script>
+const MAX=3000, LH=30, IME=!!window.Android;
+if(IME)document.body.classList.add("ime");
+const ROWS=[["q","w","e","r","t","y","u","i","o","p"],["a","s","d","f","g","h","j","k","l"],["z","x","c","v","b","n","m"]];
+const SYM=[["1","2","3","4","5","6","7","8","9","0"],["-","/",":",";","(",")","$","&","@","\""],[".",",","?","!","'","#","%"]];
+/* বিজয় (Bijoy) লেআউট: সাধারণ / Shift */
+const BN={q:"ঙ",w:"য",e:"ড",r:"প",t:"ট",y:"চ",u:"জ",i:"হ",o:"গ",p:"ড়",a:"ৃ",s:"ু",d:"ি",f:"া",g:"্",h:"ব",j:"ক",k:"ত",l:"দ",z:"্র",x:"ও",c:"ে",v:"র",b:"ন",n:"স",m:"ম"};
+const BS={q:"ং",w:"য়",e:"ঢ",r:"ফ",t:"ঠ",y:"ছ",u:"ঝ",i:"ঞ",o:"ঘ",p:"ঢ়",a:"র্",s:"ূ",d:"ী",f:"অ",g:"।",h:"ভ",j:"খ",k:"থ",l:"ধ",z:"ঁ",x:"ৗ",c:"ৈ",v:"ল",b:"ণ",n:"ষ",m:"শ"};
+const VOW=["অ","আ","ই","ঈ","উ","ঊ","ঋ","এ","ঐ","ও","ঔ","ৎ","ঃ","ং","ঁ","ক্ষ","জ্ঞ","৳"];
+let text="", shift=false, caps=false, sym=false, bn=false, lastShift=0, audio;
+const $=id=>document.getElementById(id);
+const kb=$("kb"), paper=$("paper"), lamp=$("lamp"), t1=$("t1"), t2=$("t2");
+
+function tick(){
+  try{audio=audio||new (window.AudioContext||window.webkitAudioContext)();
+    const o=audio.createOscillator(),g=audio.createGain();o.type="square";o.frequency.value=180+Math.random()*40;
+    g.gain.setValueAtTime(.04,audio.currentTime);g.gain.exponentialRampToValueAtTime(.001,audio.currentTime+.05);
+    o.connect(g).connect(audio.destination);o.start();o.stop(audio.currentTime+.05);}catch(e){}
+  try{navigator.vibrate&&navigator.vibrate(8)}catch(e){}
+}
+const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+let curX=null,tgtX=0;
+function render(){
+  const html=esc(text)+'<span class="caret"></span>';
+  t1.innerHTML=html; t2.innerHTML=html;
+  const c=t1.querySelector(".caret"), H=paper.clientHeight;
+  const ty=H-14-(c.offsetTop+LH);
+  t1.style.transform=t2.style.transform="translateY("+ty+"px)";
+  tgtX=22+c.offsetLeft+1;
+  if(curX===null)curX=tgtX;
+  if(!IME){try{localStorage.setItem("lk_text",text)}catch(e){}}
+  $("count").textContent=text.length.toLocaleString("en-US")+" / "+MAX.toLocaleString("en-US");
+  drawKeys();
+}
+function frame(){
+  curX+=(tgtX-curX)*.22;
+  const x=curX.toFixed(1)+"px";
+  paper.style.setProperty("--x",x); lamp.style.left=x;
+  requestAnimationFrame(frame);
+}
+function add(s){
+  if(!IME&&text.length+s.length>MAX)return;
+  if(IME)Android.commit(s);
+  text+=s; if(IME)text=text.slice(-150);
+}
+function press(k){
+  tick();
+  if(k==="@bksp"){if(IME)Android.backspace();text=text.slice(0,-1)}
+  else if(k==="@enter"){if(IME)Android.enter();add("\n")}
+  else if(k==="@space")add(" ");
+  else if(k==="@shift"){const n=Date.now();if(n-lastShift<350){caps=true;shift=true}else{caps=false;shift=!shift}lastShift=n}
+  else if(k==="@sym")sym=!sym;
+  else if(k==="@lang"){bn=!bn;sym=false}
+  else{add(k);if(shift&&!caps)shift=false}
+  render();
+}
+function out(ch){
+  const up=shift||caps;
+  if(bn)return up?BS[ch]:BN[ch];
+  return up?ch.toUpperCase():ch;
+}
+function drawKeys(){
+  kb.innerHTML="";
+  if(bn&&!sym){
+    const v=document.createElement("div");v.className="row vow";
+    VOW.forEach(c=>v.appendChild(mk(c,c,"")));
+    kb.appendChild(v);
+  }
+  (sym?SYM:ROWS).forEach((r,i)=>{
+    const d=document.createElement("div");d.className="row";
+    if(i===2&&!sym)d.appendChild(mk("⇧","@shift","wide fn"+(shift||caps?" on":"")));
+    r.forEach(ch=>{const o=sym?ch:out(ch);d.appendChild(mk(o,o,""))});
+    if(i===2)d.appendChild(mk("⌫","@bksp","wide fn"));
+    kb.appendChild(d);
+  });
+  const b=document.createElement("div");b.className="row";
+  b.appendChild(mk(sym?"ABC":"123","@sym","wide fn"));
+  b.appendChild(mk(bn?"EN":"বাং","@lang","wide fn"));
+  b.appendChild(mk(bn?"স্পেস":"space","@space","space"));
+  b.appendChild(mk("↵","@enter","wide fn"));
+  kb.appendChild(b);
+}
+function mk(label,k,cls){
+  const e=document.createElement("button");e.className="key "+cls;e.textContent=label;e.dataset.k=k;e.type="button";
+  e.addEventListener("pointerdown",ev=>{ev.preventDefault();press(k);
+    if(k==="@bksp"){clearTimeout(e._t);clearInterval(e._i);e._t=setTimeout(()=>e._i=setInterval(()=>press("@bksp"),60),380)}});
+  ["pointerup","pointerleave","pointercancel"].forEach(n=>e.addEventListener(n,()=>{clearTimeout(e._t);clearInterval(e._i)}));
+  return e;
+}
+function flash(k){[...kb.querySelectorAll(".key")].some(el=>{if(el.dataset.k===k){el.classList.add("down");setTimeout(()=>el.classList.remove("down"),90);return true}})}
+/* কম্পিউটারের কীবোর্ড */
+document.addEventListener("keydown",e=>{
+  if(e.ctrlKey||e.metaKey||e.altKey)return;
+  let k=null;
+  if(e.key==="Backspace")k="@bksp";else if(e.key==="Enter")k="@enter";else if(e.key===" ")k="@space";
+  else if(e.key.length===1){
+    const l=e.key.toLowerCase();
+    k=(bn&&BN[l])?(e.shiftKey?BS[l]:BN[l]):e.key;
+  }
+  if(k){e.preventDefault();const s=shift;press(k);flash(k)}
+});
+$("copy").onclick=async()=>{try{await navigator.clipboard.writeText(text);$("copy").textContent="কপি হয়েছে"}catch(e){$("copy").textContent="কপি হয়নি"}setTimeout(()=>$("copy").textContent="কপি",1500)};
+$("share").onclick=async()=>{try{if(navigator.share)await navigator.share({text});else await navigator.clipboard.writeText(text)}catch(e){}};
+document.querySelectorAll("[data-send]").forEach(b=>b.onclick=()=>{
+  const q=encodeURIComponent(text),t=b.dataset.send;
+  const u={wa:"https://wa.me/?text="+q,tg:"https://t.me/share/url?url=%20&text="+q,sms:"sms:?&body="+q,mail:"mailto:?body="+q}[t];
+  window.open(u,"_blank")||(location.href=u);
+});
+$("save").onclick=()=>{const a=document.createElement("a");a.href="data:text/plain;charset=utf-8,"+encodeURIComponent(text);a.download="note.txt";a.click()};
+$("clear").onclick=()=>{text="";render()};
+$("glow").onclick=()=>{const r=document.documentElement;r.dataset.glow=r.dataset.glow==="cool"?"warm":"cool"};
+window.addEventListener("resize",render);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(render);
+if(!IME){try{text=localStorage.getItem("lk_text")||""}catch(e){}if(!text)text="আমার সোনার বাংলা, আমি তোমায় ভালোবাসি। "}
+render();requestAnimationFrame(frame);
+</script>
+</body>
+</html>
